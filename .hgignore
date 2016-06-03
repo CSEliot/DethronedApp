@@ -1,0 +1,25 @@
+syntax: glob
+.DS_Store
+*.sln
+*.userprefs
+*.csproj
+*.pidb
+*.unitypackage
+*.suo
+*.unityproj
+*.bin
+ 
+Assets\Notes.txt.meta.orig.meta
+Assets\StreamingAssets\build_info.txt
+Assets\StreamingAssets\build_info.txt.meta
+Assets/PixelDraw
+*.orig
+build_info.txt
+*orig.meta
+Photon-Unity-Win81.unitypackage.meta
+*.psd
+syntax: regexp
+^Library/.*
+^Temp/.*
+^obj/.*
+^Builds/.*
