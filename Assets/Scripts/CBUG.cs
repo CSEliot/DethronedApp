@@ -32,6 +32,7 @@ public class CBUG : MonoBehaviour {
     private float previousClear;
     private bool neverClear;
     private int maxLines = 33; //Tested, based on 24pt Min.
+    private bool isDisabled;
     #endregion
 
 
@@ -44,27 +45,32 @@ public class CBUG : MonoBehaviour {
             logText.color = new Color(0, 0, 0, 0);
         if (ClearTime == 0)
             neverClear = true;
-        if (ClearAll)
-            ClearAmount = -1;
 
         transform.tag = "CBUG";
         previousClear = Time.time;
+
+        if (!Debug.isDebugBuild && !DebugOnOfficial) {
+            isDisabled = true;
+            _ClearLines(-1);
+        }else {
+            isDisabled = false;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (!Debug.isDebugBuild && !DebugOnOfficial) {
-            gameObject.SetActive(false);
-            return;
-        }
-
-        if (!ALL_DEBUG_TOGGLE)
+        if (!ALL_DEBUG_TOGGLE || isDisabled)
             return;
 
         if (Clear) {
             Clear = false;
             _ClearLines(ClearAmount);
+        }
+
+        if (ClearAll) {
+            ClearAll = false;
+            _ClearLines(-1);
         }
 
         if (!isParented && GameObject.Find("CanvasGroup") != null) {
@@ -144,7 +150,7 @@ public class CBUG : MonoBehaviour {
 
     private void _Print(string line)
     {
-        if (!ALL_DEBUG_TOGGLE)
+        if (!ALL_DEBUG_TOGGLE || isDisabled)
             return;
 
         if(SendToConsole)
@@ -169,7 +175,7 @@ public class CBUG : MonoBehaviour {
 
     private void _Print(string line, bool debugOn)
     {
-        if (ALL_DEBUG_TOGGLE && debugOn) {
+        if (ALL_DEBUG_TOGGLE && debugOn && !isDisabled) {
             if (line == null)
                 _Print("Null @ " + System.Environment.StackTrace);
             else
