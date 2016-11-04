@@ -24,13 +24,7 @@ public class CardMan : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (!fixedFirst) {
-            _Cards[0].GetComponent<Animator>().SetBool("IsIn", true);
-            fixedFirst = true;
-        }
-
-        CBUG.Do("CurrentNum: " + currentNum);
+        //CBUG.Do("CurrentNum: " + currentNum);
 
 	}
 
@@ -39,7 +33,7 @@ public class CardMan : MonoBehaviour {
     /// </summary>
     public static void RoleUp (){
         CBUG.Do("Activated Up!");
-        if (currentNum - 1 <= 0) //==1 because we never move up last card
+        if (currentNum - 1 < 0) //==1 because we never move up last card
             return;
         currentNum--;
         currentCard = _Cards[currentNum];
