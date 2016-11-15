@@ -13,8 +13,8 @@ public class SwipeScript : MonoBehaviour
     private Vector2 fingerStartPos = Vector2.zero;
 
     private bool isSwipe = false;
-    private float minSwipeDist = 50.0f;
-    private float maxSwipeTime = 0.5f;
+    private float minSwipeDist = 25.0f;
+    private float maxSwipeTime = 0.30f;
 
     public int touches;
 
@@ -37,9 +37,24 @@ public class SwipeScript : MonoBehaviour
         if (CurrentState == ViewState.Roles)
             return;
 
-        touches = Input.touchCount;
-        if (touches > 0) {
+        if (Input.GetKeyDown("w")) {
+            if (CurrentState == ViewState.Cards)
+                CardMan.RoleUp();
+            else
+                BookMan.RoleUp();
+        }
 
+        if (Input.GetKeyDown("s")) {
+            if (CurrentState == ViewState.Cards)
+                CardMan.RoleDown();
+            else
+                BookMan.RoleDown();
+        }
+
+
+        touches = Input.touchCount;
+        if (touches > 0 || Input.GetMouseButtonDown(0)) {
+            Debug.Log("OOOOH");
             foreach (Touch touch in Input.touches) {
                 switch (touch.phase) {
                     case TouchPhase.Began:
