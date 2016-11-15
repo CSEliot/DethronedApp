@@ -24,12 +24,7 @@ public class BookMan : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (!fixedFirst) {
-            _Pages[0].GetComponent<Animator>().SetBool("IsIn", true);
-            fixedFirst = true;
-        }
-
+        
     }
 
     /// <summary>
@@ -37,7 +32,7 @@ public class BookMan : MonoBehaviour {
     /// </summary>
     public static void RoleUp (){
         CBUG.Do("Activated Up!");
-        if (currentNum - 1 <= 0) //==1 because we never move up last card
+        if (currentNum - 1 < 0) //==1 because we never move up last card
             return;
         currentNum--;
         currentPage = _Pages[currentNum];
@@ -57,8 +52,8 @@ public class BookMan : MonoBehaviour {
         currentPage = _Pages[currentNum >= _Pages.Length ? _Pages.Length - 1 : currentNum];
     }
 
-    public static CardMan GetRef()
+    public static BookMan GetRef()
     {
-        return GameObject.FindGameObjectWithTag("BookMan").GetComponent<CardMan>();
+        return GameObject.FindGameObjectWithTag("BookMan").GetComponent<BookMan>();
     }
 }
