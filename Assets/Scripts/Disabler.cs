@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Disabler : MonoBehaviour {
 
+    public GameObject EnableOther;
+    public bool DisableSelf;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -15,11 +18,25 @@ public class Disabler : MonoBehaviour {
 
     public void DisableNow()
     {
-        gameObject.SetActive(false);
+        if (DisableSelf) {
+            gameObject.SetActive(false);
+        }
+        if (EnableOther != null) {
+            EnableOther.SetActive(true);
+        } else {
+            gameObject.SetActive(false);
+        }
     }
 
     public void DisableParent()
     {
-        transform.parent.gameObject.SetActive(false);
+        if (DisableSelf) {
+            gameObject.SetActive(false);
+        }
+        if(EnableOther != null) {
+            EnableOther.SetActive(true);
+        }else {
+            transform.parent.gameObject.SetActive(false);
+        }
     }
 }
